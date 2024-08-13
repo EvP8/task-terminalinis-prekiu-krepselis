@@ -1,4 +1,5 @@
 // Vieta reikiamų failų importavimui... jei reikia tokių 👀
+import { shoppingList } from "./js/shoppingList";
 
 /*
 --------------------------------------------------------
@@ -59,7 +60,7 @@ Pavadinimas  | Kiekis      | Vieneto kaina | Viso mokėti
 
 console.log(productDetails(firstShoppingList, 42069));
 /*
-Prekė, su ID: 42069 neegzistuoja.
+Prekė, su ID: 42069 neegzistuoja. 
 */
 
 console.log(productDetails(firstShoppingList, 1));
