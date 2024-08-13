@@ -1,6 +1,6 @@
 // Vieta reikiamų failų importavimui... jei reikia tokių 👀
-import { shoppingList } from "./js/shoppingList";
-
+import { shoppingList } from './js/shoppingList.js';
+import { productDetails } from './js/productDetails.js';
 /*
 --------------------------------------------------------
 KOMENTARAS:
@@ -138,3 +138,7 @@ Vieneto kaina | 0.14 Eur
 Viso mokėti   | 3.22 Eur
 ------------------------
 */
+
+
+
+
