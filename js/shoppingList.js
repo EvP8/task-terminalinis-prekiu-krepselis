@@ -1,17 +1,20 @@
-export function shoppingList(cart) {
-    if (cart.length === 0) {
-        return "Šiuo metu, jūsų prekių krepšelis yra tuščias.";
-    }
+export function shoppingList(products) {
+    const info = `Jūsų prekių krepšelyje yra ${products.length} prekės:`;
 
-    const title = "Pavadinimas  | Kiekis      | Vieneto kaina | Viso mokėti";
-    const line = "-----------------------------------------------------------";
+    const Pavadinimas = [
+        'Pavadinimas',
+        'Kiekis',
+        'Vieneto kaina',
+        'Viso mokėti'
+    ];
 
-    const cartDetails = cart.map((item, index) => {
-        const totalPrice = (item.unitPrice * item.amount / 100).toFixed(2);
-        const unitPrice = (item.unitPrice / 100).toFixed(2);
-        
-        return `${index + 1}. ${item.name} | ${item.amount} vnt | ${unitPrice} Eur      | ${totalPrice} Eur`;
+    const details = products.map((product, index) => {
+        return `${index + 1}. ${product.name}   ${product.amount} vnt   ${formatPrice(product.unitPrice)}   ${formatPrice(product.amount * product.unitPrice)}`;
     });
 
-    return `Jūsų prekių krepšelyje yra ${cart.length} prekės:\n${line}\n${title}\n${line}\n${cartDetails.join('\n')}\n${line}`;
+    return [info, Pavadinimas.join('   '), ...details].join('\n');
+}
+
+function formatPrice(price) {
+    return (price / 100).toFixed(2) + ' Eur';
 }
