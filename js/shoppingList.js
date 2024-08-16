@@ -1,20 +1,31 @@
+// js/shoppingList.js
+
 export function shoppingList(products) {
-    const info = `Jūsų prekių krepšelyje yra ${products.length} prekės:`;
+    if (products.length === 0) {
+        return "Šiuo metu, jūsų prekių krepšelis yra tuščias.";
+    }
 
-    const Pavadinimas = [
-        'Pavadinimas',
-        'Kiekis',
-        'Vieneto kaina',
-        'Viso mokėti'
-    ];
+    const title = `
+Jūsų prekių krepšelyje yra ${products.length} prekės:
+${'-'.repeat(62)}
+Pavadinimas  | Kiekis      | Vieneto kaina | Viso mokėti
+${'-'.repeat(62)}
+    `.trim();
 
-    const details = products.map((product, index) => {
-        return `${index + 1}. ${product.name}   ${product.amount} vnt   ${formatPrice(product.unitPrice)}   ${formatPrice(product.amount * product.unitPrice)}`;
+    const rows = products.map((product, index) => {
+        const total = formatPrice(product.amount * product.unitPrice);
+        return `${padRight(index + 1 + '. ' + product.name, 12)}| ${padRight(product.amount + ' vnt', 11)}| ${padRight(formatPrice(product.unitPrice), 14)}| ${total}`;
     });
 
-    return [info, Pavadinimas.join('   '), ...details].join('\n');
+    const dash = `${'-'.repeat(62)}`;
+
+    return [title, ...rows, dash].join("\n");
 }
 
 function formatPrice(price) {
-    return (price / 100).toFixed(2) + ' Eur';
+    return (price / 100).toFixed(2) + " Eur";
+}
+
+function padRight(str, length) {
+    return str + ' '.repeat(length - str.length);
 }
