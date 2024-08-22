@@ -1,4 +1,4 @@
-import { formatPrice, padRight, createLine } from './utils.js';
+import { formatPrice, padRight, createLine, getLineWidth } from './utils.js';
 
 export function productDetails(products, productId) {
     const product = products.find(p => p.id === productId);
@@ -18,7 +18,7 @@ export function productDetails(products, productId) {
     const maxKeyLength = Math.max(...Object.keys(details).map(key => key.length)) + 2;
     const maxValueLength = Math.max(...Object.values(details).map(value => value.length)) + 2;
 
-    const lineWidth = maxKeyLength + maxValueLength + 3;
+    const lineWidth = getLineWidth({ ID: maxKeyLength, Pavadinimas: maxKeyLength, Kiekis: maxKeyLength, 'Vieneto kaina': maxKeyLength, 'Viso mokėti': maxKeyLength }, 3);
 
     const formattedDetails = Object.entries(details).map(([key, value]) => 
         `${padRight(key, maxKeyLength)}| ${value}`
