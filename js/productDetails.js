@@ -1,25 +1,34 @@
-// js/productDetails.js
+import { formatPrice, padRight, createLine } from './utils.js';
 
 export function productDetails(products, productId) {
     const product = products.find(p => p.id === productId);
-    
+
     if (!product) {
         return `Prekė, su ID: ${productId} neegzistuoja.`;
     }
 
-    return `
-${'-'.repeat(62)}
-Prekės informacija
-${'-'.repeat(62)}
-ID            | ${product.id}
-Pavadinimas   | ${product.name}
-Kiekis        | ${product.amount} vnt
-Vieneto kaina | ${formatPrice(product.unitPrice)}
-Viso mokėti   | ${formatPrice(product.amount * product.unitPrice)}
-${'-'.repeat(62)}
-    `.trim();
-}
+    const details = {
+        ID: product.id,
+        Pavadinimas: product.name,
+        Kiekis: `${product.amount} vnt`,
+        'Vieneto kaina': formatPrice(product.unitPrice),
+        'Viso mokėti': formatPrice(product.amount * product.unitPrice)
+    };
 
-function formatPrice(price) {
-    return (price / 100).toFixed(2) + " Eur";
+    const maxKeyLength = Math.max(...Object.keys(details).map(key => key.length)) + 2;
+    const maxValueLength = Math.max(...Object.values(details).map(value => value.length)) + 2;
+
+    const lineWidth = maxKeyLength + maxValueLength + 3;
+
+    const formattedDetails = Object.entries(details).map(([key, value]) => 
+        `${padRight(key, maxKeyLength)}| ${value}`
+    ).join('\n');
+
+    return `
+${createLine(lineWidth)}
+Prekės informacija
+${createLine(lineWidth)}
+${formattedDetails}
+${createLine(lineWidth)}
+    `.trim();
 }
